@@ -76,7 +76,7 @@ class Dadata_Collection extends Dadata_Model implements Iterator, Countable
       return $this->selfLink;
     }    
 
-    public function rewind()
+    public function rewind(): void
     {
       if (isset($this->modelData[$this->collection_key])
           && is_array($this->modelData[$this->collection_key])) {
@@ -84,7 +84,7 @@ class Dadata_Collection extends Dadata_Model implements Iterator, Countable
       }
     }
 
-    public function current()
+    public function current(): mixed
     {
       $this->coerceType($this->key());
       if (is_array($this->modelData[$this->collection_key])) {
@@ -92,7 +92,7 @@ class Dadata_Collection extends Dadata_Model implements Iterator, Countable
       }
     }
 
-    public function key()
+    public function key(): mixed
     {
       if (isset($this->modelData[$this->collection_key])
           && is_array($this->modelData[$this->collection_key])) {
@@ -100,18 +100,18 @@ class Dadata_Collection extends Dadata_Model implements Iterator, Countable
       }
     }
 
-    public function next()
+    public function next(): void
     {
-      return next($this->modelData[$this->collection_key]);
+      next($this->modelData[$this->collection_key]);
     }
 
-    public function valid()
+    public function valid(): bool
     {
       $key = $this->key();
       return $key !== null && $key !== false;
     }
 
-    public function count()
+    public function count(): int
     {
       if (!isset($this->modelData[$this->collection_key])) {
         return 0;
@@ -119,7 +119,7 @@ class Dadata_Collection extends Dadata_Model implements Iterator, Countable
       return count($this->modelData[$this->collection_key]);
     }
 
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
       if (!is_numeric($offset)) {
         return parent::offsetExists($offset);
@@ -127,7 +127,7 @@ class Dadata_Collection extends Dadata_Model implements Iterator, Countable
       return isset($this->modelData[$this->collection_key][$offset]);
     }
 
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
       if (!is_numeric($offset)) {
         return parent::offsetGet($offset);
@@ -136,18 +136,18 @@ class Dadata_Collection extends Dadata_Model implements Iterator, Countable
       return $this->modelData[$this->collection_key][$offset];
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
       if (!is_numeric($offset)) {
-        return parent::offsetSet($offset, $value);
+        parent::offsetSet($offset, $value);
       }
       $this->modelData[$this->collection_key][$offset] = $value;
     }
 
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
       if (!is_numeric($offset)) {
-        return parent::offsetUnset($offset);
+        parent::offsetUnset($offset);
       }
       unset($this->modelData[$this->collection_key][$offset]);
     }
